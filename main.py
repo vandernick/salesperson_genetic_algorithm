@@ -1,12 +1,10 @@
-import Reporter
 import numpy as np
 from numpy.random import randint
 
 
-# Modify the class name to match your student number.
-class r0824741:
+class GenAlgorithm:
 
-    def __init__(self, k=4, reduce_k=False, pop_size=132, offspring_ratio=1, mutation_rate=0.1, max_iterations=None,
+    def __init__(self, k=4, reduce_k=False, pop_size=132, offspring_ratio=1, mutation_rate=0.1, max_iterations=4000,
                  stop_with_mean=False, nearest_neighbors=True, localsearch=True, localsearch_rate=0.5,
                  diversity_promotion=False, introduce_new=True, diversity_when_introduce=True, fitness_sharing=True,
                  efficient_large_tours=True, debug=False):
@@ -14,7 +12,6 @@ class r0824741:
         self.reduce_k = reduce_k  # if k has to be decreased in every iteration
         self.pop_size = pop_size
         self.mutation_rate = mutation_rate
-        self.reporter = Reporter.Reporter(self.__class__.__name__)
         self.offspring_size = int(pop_size * offspring_ratio)
         self.max_iterations = max_iterations
         self.stop_with_mean = stop_with_mean  # if True, it will stop if the mean is the same for a number of iterations
@@ -562,21 +559,15 @@ class r0824741:
                         diversity_promotion_active = True
                         iterations_div_passed = 0
 
-            # Call the reporter with:
-            #  - the mean objective function value of the population
-            #  - the best objective function value of the population
-            #  - a 1D numpy array in the cycle notation containing the best solution
-            #    with city numbering starting from 0
-            timeLeft = self.reporter.report(meanObjective, bestObjectiveOverall, bestSolutionOverall)
-            if timeLeft < 0:
-                break
 
         # Your code here.
         if (self.debug):
             return means, bests, iterations, bestSolutionOverall, timeLeft, fit
         return 0
 
+#About filename:
+#Should be a .csv, with a square matrix, where each row represents a city and each column a city. The same cities should be in the rows and in
+# the columns and ordered the same way. Each value will be the distance between the x-th city and the y-th city, therefore the diagonal should be zeros.
 
-
-
+GenAlgorithm.optimize(filename)
 
